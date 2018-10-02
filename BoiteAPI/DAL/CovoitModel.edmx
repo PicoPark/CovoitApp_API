@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="apiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assoc_Utilisateur_vehicule">
+          <Key>
+            <PropertyRef Name="id_association" />
+          </Key>
+          <Property Name="id_association" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_vehicule" Type="int" />
+          <Property Name="id_utilisateur" Type="int" />
+        </EntityType>
+        <EntityType Name="Covoiturage">
+          <Key>
+            <PropertyRef Name="id_covoiturage" />
+          </Key>
+          <Property Name="id_covoiturage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_chauffeur" Type="int" />
+          <Property Name="depart" Type="varchar" MaxLength="100" />
+          <Property Name="arrive" Type="varchar" MaxLength="100" />
+          <Property Name="date_depart" Type="datetime" />
+          <Property Name="tarif" Type="int" />
+          <Property Name="dateCreation" Type="date" />
+          <Property Name="nb_place" Type="int" />
+          <Property Name="is_full" Type="bit" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="id_reservation" />
+          </Key>
+          <Property Name="id_reservation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_covoiturage" Type="int" />
+          <Property Name="id_utilisateur" Type="int" />
+          <Property Name="is_validate" Type="bit" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="id_utilisateur" />
+          </Key>
+          <Property Name="id_utilisateur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prenom" Type="varchar" MaxLength="100" />
+          <Property Name="mail" Type="varchar" MaxLength="100" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
+          <Property Name="profil_image" Type="varchar" MaxLength="100" />
+          <Property Name="nom" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Vehicule">
+          <Key>
+            <PropertyRef Name="id_vehicule" />
+          </Key>
+          <Property Name="id_vehicule" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="marque" Type="varchar" MaxLength="100" />
+          <Property Name="model" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="fk_association_utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Assoc_Utilisateur_vehicule" Type="Self.Assoc_Utilisateur_vehicule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="id_utilisateur" />
+            </Principal>
+            <Dependent Role="Assoc_Utilisateur_vehicule">
+              <PropertyRef Name="id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_association_vehicule">
+          <End Role="Vehicule" Type="Self.Vehicule" Multiplicity="0..1" />
+          <End Role="Assoc_Utilisateur_vehicule" Type="Self.Assoc_Utilisateur_vehicule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicule">
+              <PropertyRef Name="id_vehicule" />
+            </Principal>
+            <Dependent Role="Assoc_Utilisateur_vehicule">
+              <PropertyRef Name="id_vehicule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_covoiturage_utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Covoiturage" Type="Self.Covoiturage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="id_utilisateur" />
+            </Principal>
+            <Dependent Role="Covoiturage">
+              <PropertyRef Name="id_chauffeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reservation_covoiturage">
+          <End Role="Covoiturage" Type="Self.Covoiturage" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Covoiturage">
+              <PropertyRef Name="id_covoiturage" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="id_covoiturage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reservation_utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="id_utilisateur" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apiModelStoreContainer">
+          <EntitySet Name="Assoc_Utilisateur_vehicule" EntityType="Self.Assoc_Utilisateur_vehicule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Covoiturage" EntityType="Self.Covoiturage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicule" EntityType="Self.Vehicule" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_association_utilisateur" Association="Self.fk_association_utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Assoc_Utilisateur_vehicule" EntitySet="Assoc_Utilisateur_vehicule" />
+          </AssociationSet>
+          <AssociationSet Name="fk_association_vehicule" Association="Self.fk_association_vehicule">
+            <End Role="Vehicule" EntitySet="Vehicule" />
+            <End Role="Assoc_Utilisateur_vehicule" EntitySet="Assoc_Utilisateur_vehicule" />
+          </AssociationSet>
+          <AssociationSet Name="fk_covoiturage_utilisateur" Association="Self.fk_covoiturage_utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Covoiturage" EntitySet="Covoiturage" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reservation_covoiturage" Association="Self.fk_reservation_covoiturage">
+            <End Role="Covoiturage" EntitySet="Covoiturage" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reservation_utilisateur" Association="Self.fk_reservation_utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="apiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Assoc_Utilisateur_vehicule">
+          <Key>
+            <PropertyRef Name="id_association" />
+          </Key>
+          <Property Name="id_association" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_vehicule" Type="Int32" />
+          <Property Name="id_utilisateur" Type="Int32" />
+          <NavigationProperty Name="Vehicule" Relationship="Self.fk_association_vehicule" FromRole="Assoc_Utilisateur_vehicule" ToRole="Vehicule" />
+          <NavigationProperty Name="Utilisateur" Relationship="apiModel.fk_association_utilisateur" FromRole="Assoc_Utilisateur_vehicule" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Covoiturage">
+          <Key>
+            <PropertyRef Name="id_covoiturage" />
+          </Key>
+          <Property Name="id_covoiturage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_chauffeur" Type="Int32" />
+          <Property Name="depart" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="arrive" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="date_depart" Type="DateTime" Precision="3" />
+          <Property Name="tarif" Type="Int32" />
+          <Property Name="dateCreation" Type="DateTime" Precision="0" />
+          <Property Name="nb_place" Type="Int32" />
+          <Property Name="is_full" Type="Boolean" />
+          <NavigationProperty Name="Reservation" Relationship="Self.fk_reservation_covoiturage" FromRole="Covoiturage" ToRole="Reservation" />
+          <NavigationProperty Name="Utilisateur" Relationship="apiModel.fk_covoiturage_utilisateur" FromRole="Covoiturage" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="id_reservation" />
+          </Key>
+          <Property Name="id_reservation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_covoiturage" Type="Int32" />
+          <Property Name="id_utilisateur" Type="Int32" />
+          <Property Name="is_validate" Type="Boolean" />
+          <NavigationProperty Name="Covoiturage" Relationship="Self.fk_reservation_covoiturage" FromRole="Reservation" ToRole="Covoiturage" />
+          <NavigationProperty Name="Utilisateur" Relationship="apiModel.fk_reservation_utilisateur" FromRole="Reservation" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Vehicule">
+          <Key>
+            <PropertyRef Name="id_vehicule" />
+          </Key>
+          <Property Name="id_vehicule" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="marque" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="model" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assoc_Utilisateur_vehicule" Relationship="Self.fk_association_vehicule" FromRole="Vehicule" ToRole="Assoc_Utilisateur_vehicule" />
+        </EntityType>
+        <Association Name="fk_association_vehicule">
+          <End Role="Vehicule" Type="Self.Vehicule" Multiplicity="0..1" />
+          <End Role="Assoc_Utilisateur_vehicule" Type="Self.Assoc_Utilisateur_vehicule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicule">
+              <PropertyRef Name="id_vehicule" />
+            </Principal>
+            <Dependent Role="Assoc_Utilisateur_vehicule">
+              <PropertyRef Name="id_vehicule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reservation_covoiturage">
+          <End Role="Covoiturage" Type="Self.Covoiturage" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Covoiturage">
+              <PropertyRef Name="id_covoiturage" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="id_covoiturage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CovoitEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assoc_Utilisateur_vehicule" EntityType="Self.Assoc_Utilisateur_vehicule" />
+          <EntitySet Name="Covoiturage" EntityType="Self.Covoiturage" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" />
+          <EntitySet Name="Vehicule" EntityType="Self.Vehicule" />
+          <AssociationSet Name="fk_association_vehicule" Association="Self.fk_association_vehicule">
+            <End Role="Vehicule" EntitySet="Vehicule" />
+            <End Role="Assoc_Utilisateur_vehicule" EntitySet="Assoc_Utilisateur_vehicule" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reservation_covoiturage" Association="Self.fk_reservation_covoiturage">
+            <End Role="Covoiturage" EntitySet="Covoiturage" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <EntitySet Name="Utilisateur" EntityType="apiModel.Utilisateur" />
+          <AssociationSet Name="fk_association_utilisateur" Association="apiModel.fk_association_utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Assoc_Utilisateur_vehicule" EntitySet="Assoc_Utilisateur_vehicule" />
+          </AssociationSet>
+          <AssociationSet Name="fk_covoiturage_utilisateur" Association="apiModel.fk_covoiturage_utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Covoiturage" EntitySet="Covoiturage" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reservation_utilisateur" Association="apiModel.fk_reservation_utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="id_utilisateur" />
+          </Key>
+          <Property Name="id_utilisateur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prenom" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="profil_image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assoc_Utilisateur_vehicule" Relationship="apiModel.fk_association_utilisateur" FromRole="Utilisateur" ToRole="Assoc_Utilisateur_vehicule" />
+          <NavigationProperty Name="Covoiturage" Relationship="apiModel.fk_covoiturage_utilisateur" FromRole="Utilisateur" ToRole="Covoiturage" />
+          <NavigationProperty Name="Reservation" Relationship="apiModel.fk_reservation_utilisateur" FromRole="Utilisateur" ToRole="Reservation" />
+        </EntityType>
+        <Association Name="fk_association_utilisateur">
+          <End Type="apiModel.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="apiModel.Assoc_Utilisateur_vehicule" Role="Assoc_Utilisateur_vehicule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="id_utilisateur" />
+            </Principal>
+            <Dependent Role="Assoc_Utilisateur_vehicule">
+              <PropertyRef Name="id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_covoiturage_utilisateur">
+          <End Type="apiModel.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="apiModel.Covoiturage" Role="Covoiturage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="id_utilisateur" />
+            </Principal>
+            <Dependent Role="Covoiturage">
+              <PropertyRef Name="id_chauffeur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reservation_utilisateur">
+          <End Type="apiModel.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="apiModel.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="id_utilisateur" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="id_utilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="apiModelStoreContainer" CdmEntityContainer="CovoitEntities">
+          <EntitySetMapping Name="Assoc_Utilisateur_vehicule">
+            <EntityTypeMapping TypeName="apiModel.Assoc_Utilisateur_vehicule">
+              <MappingFragment StoreEntitySet="Assoc_Utilisateur_vehicule">
+                <ScalarProperty Name="id_association" ColumnName="id_association" />
+                <ScalarProperty Name="id_vehicule" ColumnName="id_vehicule" />
+                <ScalarProperty Name="id_utilisateur" ColumnName="id_utilisateur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Covoiturage">
+            <EntityTypeMapping TypeName="apiModel.Covoiturage">
+              <MappingFragment StoreEntitySet="Covoiturage">
+                <ScalarProperty Name="id_covoiturage" ColumnName="id_covoiturage" />
+                <ScalarProperty Name="id_chauffeur" ColumnName="id_chauffeur" />
+                <ScalarProperty Name="depart" ColumnName="depart" />
+                <ScalarProperty Name="arrive" ColumnName="arrive" />
+                <ScalarProperty Name="date_depart" ColumnName="date_depart" />
+                <ScalarProperty Name="tarif" ColumnName="tarif" />
+                <ScalarProperty Name="dateCreation" ColumnName="dateCreation" />
+                <ScalarProperty Name="nb_place" ColumnName="nb_place" />
+                <ScalarProperty Name="is_full" ColumnName="is_full" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservation">
+            <EntityTypeMapping TypeName="apiModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="id_reservation" ColumnName="id_reservation" />
+                <ScalarProperty Name="id_covoiturage" ColumnName="id_covoiturage" />
+                <ScalarProperty Name="id_utilisateur" ColumnName="id_utilisateur" />
+                <ScalarProperty Name="is_validate" ColumnName="is_validate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicule">
+            <EntityTypeMapping TypeName="apiModel.Vehicule">
+              <MappingFragment StoreEntitySet="Vehicule">
+                <ScalarProperty Name="id_vehicule" ColumnName="id_vehicule" />
+                <ScalarProperty Name="marque" ColumnName="marque" />
+                <ScalarProperty Name="model" ColumnName="model" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateur">
+            <EntityTypeMapping TypeName="apiModel.Utilisateur">
+              <MappingFragment StoreEntitySet="Utilisateur">
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="profil_image" ColumnName="profil_image" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="id_utilisateur" ColumnName="id_utilisateur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

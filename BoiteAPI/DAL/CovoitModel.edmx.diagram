@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0fccf9d994ed49d2bb411efa4c39197f" Name="Diagram1">
+        <EntityTypeShape EntityType="apiModel.Assoc_Utilisateur_vehicule" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="apiModel.Covoiturage" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="apiModel.Reservation" Width="1.5" PointX="5.875" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="apiModel.Vehicule" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="apiModel.fk_association_vehicule" ManuallyRouted="false" />
+        <AssociationConnector Association="apiModel.fk_reservation_covoiturage" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="apiModel.Utilisateur" Width="1.5" PointX="0.75" PointY="4.375" />
+        <AssociationConnector Association="apiModel.fk_association_utilisateur" />
+        <AssociationConnector Association="apiModel.fk_covoiturage_utilisateur" />
+        <AssociationConnector Association="apiModel.fk_reservation_utilisateur" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

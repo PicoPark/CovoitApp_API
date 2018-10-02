@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bbb7b33bc8c94a85bbbca760f2d61621" Name="Diagram1">
+        <EntityTypeShape EntityType="modelModel.Boite_Livre" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="modelModel.Commentaire" Width="1.5" PointX="0.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="modelModel.Boite" Width="1.5" PointX="3.375" PointY="5" />
+        <AssociationConnector Association="modelModel.fk_boite_livre_boite" />
+        <EntityTypeShape EntityType="modelModel.Livre" Width="1.5" PointX="0.5" PointY="1.875" />
+        <AssociationConnector Association="modelModel.fk_boite_livre_livre" />
+        <AssociationConnector Association="modelModel.fk_commentaire_livre" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

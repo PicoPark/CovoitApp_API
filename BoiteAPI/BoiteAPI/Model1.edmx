@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="modelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Boite">
+          <Key>
+            <PropertyRef Name="id_boite" />
+          </Key>
+          <Property Name="id_boite" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adresse" Type="varchar" MaxLength="500" />
+          <Property Name="code_postal" Type="varchar" MaxLength="50" />
+          <Property Name="ville" Type="varchar" MaxLength="500" />
+          <Property Name="longitude" Type="numeric" Precision="15" Scale="12" />
+          <Property Name="latitude" Type="numeric" Precision="15" Scale="12" />
+          <Property Name="remarque" Type="varchar" MaxLength="5000" />
+        </EntityType>
+        <EntityType Name="Boite_Livre">
+          <Key>
+            <PropertyRef Name="id_boite_livre" />
+          </Key>
+          <Property Name="id_boite_livre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_boite" Type="int" />
+          <Property Name="id_livre" Type="int" />
+        </EntityType>
+        <EntityType Name="Commentaire">
+          <Key>
+            <PropertyRef Name="id_commentaire" />
+          </Key>
+          <Property Name="id_commentaire" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_livre" Type="int" />
+          <Property Name="login" Type="varchar" MaxLength="100" />
+          <Property Name="texte" Type="varchar" MaxLength="1000" />
+          <Property Name="note" Type="numeric" Precision="5" Scale="0" />
+        </EntityType>
+        <EntityType Name="Livre">
+          <Key>
+            <PropertyRef Name="id_livre" />
+          </Key>
+          <Property Name="id_livre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titre" Type="varchar" MaxLength="500" />
+          <Property Name="auteur" Type="varchar" MaxLength="100" />
+          <Property Name="genre" Type="varchar" MaxLength="100" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="isbn" Type="varchar" MaxLength="50" />
+          <Property Name="url_image" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <Association Name="fk_boite_livre_boite">
+          <End Role="Boite" Type="Self.Boite" Multiplicity="0..1" />
+          <End Role="Boite_Livre" Type="Self.Boite_Livre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boite">
+              <PropertyRef Name="id_boite" />
+            </Principal>
+            <Dependent Role="Boite_Livre">
+              <PropertyRef Name="id_boite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_boite_livre_livre">
+          <End Role="Livre" Type="Self.Livre" Multiplicity="0..1" />
+          <End Role="Boite_Livre" Type="Self.Boite_Livre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Livre">
+              <PropertyRef Name="id_livre" />
+            </Principal>
+            <Dependent Role="Boite_Livre">
+              <PropertyRef Name="id_livre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_commentaire_livre">
+          <End Role="Livre" Type="Self.Livre" Multiplicity="0..1" />
+          <End Role="Commentaire" Type="Self.Commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Livre">
+              <PropertyRef Name="id_livre" />
+            </Principal>
+            <Dependent Role="Commentaire">
+              <PropertyRef Name="id_livre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="modelModelStoreContainer">
+          <EntitySet Name="Boite" EntityType="Self.Boite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Boite_Livre" EntityType="Self.Boite_Livre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Commentaire" EntityType="Self.Commentaire" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Livre" EntityType="Self.Livre" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_boite_livre_boite" Association="Self.fk_boite_livre_boite">
+            <End Role="Boite" EntitySet="Boite" />
+            <End Role="Boite_Livre" EntitySet="Boite_Livre" />
+          </AssociationSet>
+          <AssociationSet Name="fk_boite_livre_livre" Association="Self.fk_boite_livre_livre">
+            <End Role="Livre" EntitySet="Livre" />
+            <End Role="Boite_Livre" EntitySet="Boite_Livre" />
+          </AssociationSet>
+          <AssociationSet Name="fk_commentaire_livre" Association="Self.fk_commentaire_livre">
+            <End Role="Livre" EntitySet="Livre" />
+            <End Role="Commentaire" EntitySet="Commentaire" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="modelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Boite_Livre">
+          <Key>
+            <PropertyRef Name="id_boite_livre" />
+          </Key>
+          <Property Name="id_boite_livre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_boite" Type="Int32" />
+          <Property Name="id_livre" Type="Int32" />
+          <NavigationProperty Name="Boite" Relationship="modelModel.fk_boite_livre_boite" FromRole="Boite_Livre" ToRole="Boite" />
+          <NavigationProperty Name="Livre" Relationship="modelModel.fk_boite_livre_livre" FromRole="Boite_Livre" ToRole="Livre" />
+        </EntityType>
+        <EntityType Name="Commentaire">
+          <Key>
+            <PropertyRef Name="id_commentaire" />
+          </Key>
+          <Property Name="id_commentaire" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_livre" Type="Int32" />
+          <Property Name="login" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="texte" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="note" Type="Decimal" Precision="5" Scale="0" />
+          <NavigationProperty Name="Livre" Relationship="modelModel.fk_commentaire_livre" FromRole="Commentaire" ToRole="Livre" />
+        </EntityType>
+        <EntityContainer Name="modelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Boite_Livre" EntityType="Self.Boite_Livre" />
+          <EntitySet Name="Commentaire" EntityType="Self.Commentaire" />
+          <EntitySet Name="Boite" EntityType="modelModel.Boite" />
+          <AssociationSet Name="fk_boite_livre_boite" Association="modelModel.fk_boite_livre_boite">
+            <End Role="Boite" EntitySet="Boite" />
+            <End Role="Boite_Livre" EntitySet="Boite_Livre" />
+          </AssociationSet>
+          <EntitySet Name="Livre" EntityType="modelModel.Livre" />
+          <AssociationSet Name="fk_boite_livre_livre" Association="modelModel.fk_boite_livre_livre">
+            <End Role="Livre" EntitySet="Livre" />
+            <End Role="Boite_Livre" EntitySet="Boite_Livre" />
+          </AssociationSet>
+          <AssociationSet Name="fk_commentaire_livre" Association="modelModel.fk_commentaire_livre">
+            <End Role="Livre" EntitySet="Livre" />
+            <End Role="Commentaire" EntitySet="Commentaire" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Boite">
+          <Key>
+            <PropertyRef Name="id_boite" />
+          </Key>
+          <Property Name="id_boite" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adresse" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="code_postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ville" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="longitude" Type="Decimal" Precision="15" Scale="12" />
+          <Property Name="latitude" Type="Decimal" Precision="15" Scale="12" />
+          <Property Name="remarque" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Boite_Livre" Relationship="modelModel.fk_boite_livre_boite" FromRole="Boite" ToRole="Boite_Livre" />
+        </EntityType>
+        <Association Name="fk_boite_livre_boite">
+          <End Type="modelModel.Boite" Role="Boite" Multiplicity="0..1" />
+          <End Type="modelModel.Boite_Livre" Role="Boite_Livre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boite">
+              <PropertyRef Name="id_boite" />
+            </Principal>
+            <Dependent Role="Boite_Livre">
+              <PropertyRef Name="id_boite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Livre">
+          <Key>
+            <PropertyRef Name="id_livre" />
+          </Key>
+          <Property Name="id_livre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="auteur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="genre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="isbn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="url_image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Boite_Livre" Relationship="modelModel.fk_boite_livre_livre" FromRole="Livre" ToRole="Boite_Livre" />
+          <NavigationProperty Name="Commentaire" Relationship="modelModel.fk_commentaire_livre" FromRole="Livre" ToRole="Commentaire" />
+        </EntityType>
+        <Association Name="fk_boite_livre_livre">
+          <End Type="modelModel.Livre" Role="Livre" Multiplicity="0..1" />
+          <End Type="modelModel.Boite_Livre" Role="Boite_Livre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Livre">
+              <PropertyRef Name="id_livre" />
+            </Principal>
+            <Dependent Role="Boite_Livre">
+              <PropertyRef Name="id_livre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_commentaire_livre">
+          <End Type="modelModel.Livre" Role="Livre" Multiplicity="0..1" />
+          <End Type="modelModel.Commentaire" Role="Commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Livre">
+              <PropertyRef Name="id_livre" />
+            </Principal>
+            <Dependent Role="Commentaire">
+              <PropertyRef Name="id_livre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="modelModelStoreContainer" CdmEntityContainer="modelEntities">
+          <EntitySetMapping Name="Boite_Livre">
+            <EntityTypeMapping TypeName="modelModel.Boite_Livre">
+              <MappingFragment StoreEntitySet="Boite_Livre">
+                <ScalarProperty Name="id_boite_livre" ColumnName="id_boite_livre" />
+                <ScalarProperty Name="id_boite" ColumnName="id_boite" />
+                <ScalarProperty Name="id_livre" ColumnName="id_livre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commentaire">
+            <EntityTypeMapping TypeName="modelModel.Commentaire">
+              <MappingFragment StoreEntitySet="Commentaire">
+                <ScalarProperty Name="id_commentaire" ColumnName="id_commentaire" />
+                <ScalarProperty Name="id_livre" ColumnName="id_livre" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="texte" ColumnName="texte" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Boite">
+            <EntityTypeMapping TypeName="modelModel.Boite">
+              <MappingFragment StoreEntitySet="Boite">
+                <ScalarProperty Name="remarque" ColumnName="remarque" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="code_postal" ColumnName="code_postal" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="id_boite" ColumnName="id_boite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Livre">
+            <EntityTypeMapping TypeName="modelModel.Livre">
+              <MappingFragment StoreEntitySet="Livre">
+                <ScalarProperty Name="url_image" ColumnName="url_image" />
+                <ScalarProperty Name="isbn" ColumnName="isbn" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="auteur" ColumnName="auteur" />
+                <ScalarProperty Name="titre" ColumnName="titre" />
+                <ScalarProperty Name="id_livre" ColumnName="id_livre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

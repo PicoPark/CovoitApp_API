@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoiteAPI.API", "BoiteAPI.API\BoiteAPI.API.csproj", "{E818DBAA-4BEE-4EFC-A8C2-CBC0C81A771C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDal", "ConsoleApplication1\TestDal.csproj", "{7BE6306D-5D7F-4FB8-B723-C356070F7F28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{3F42E942-CDDB-4BA5-9AF4-465A7FC9DD58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E818DBAA-4BEE-4EFC-A8C2-CBC0C81A771C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E818DBAA-4BEE-4EFC-A8C2-CBC0C81A771C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E818DBAA-4BEE-4EFC-A8C2-CBC0C81A771C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E818DBAA-4BEE-4EFC-A8C2-CBC0C81A771C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BE6306D-5D7F-4FB8-B723-C356070F7F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BE6306D-5D7F-4FB8-B723-C356070F7F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BE6306D-5D7F-4FB8-B723-C356070F7F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BE6306D-5D7F-4FB8-B723-C356070F7F28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F42E942-CDDB-4BA5-9AF4-465A7FC9DD58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F42E942-CDDB-4BA5-9AF4-465A7FC9DD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F42E942-CDDB-4BA5-9AF4-465A7FC9DD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F42E942-CDDB-4BA5-9AF4-465A7FC9DD58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3449DB1E-6EE4-41C5-A7C2-C935AD2E1601}
+	EndGlobalSection
+EndGlobal
